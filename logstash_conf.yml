@@ -1,0 +1,24 @@
+version: '3'
+services:
+
+    logstash:
+        image: my-logstash:latest
+        container_name: logstash
+        build:
+         context: ./logstash/
+         dockerfile: Dockerfile
+        restart: always
+        hostname: logstash
+        ports:
+          - "5000:5000"
+        depends_on: {"elastic1": {"condition": "service_healthy"}}
+        environment:
+          ELASTIC_SERVERS: elastic1:9200,elastic2:9200,elastic3:9200,kibana:5601
+        volumes:
+          - ./logstash.yml:/tmp/logstash.yml
+          - ./pipelines.yml:/usr/share/logstash/config/pipelines.yml
+          - ./logs.conf:/tmp/logs.conf
+          - ./secrets/logstash.key:/certs/logstash.key:rw
+          - ./secrets/logstash.crt:/certs/logstash.crt:rw
+          - ./ca/elk-ca.crt:/certs/elk-ca.crt:rw
+          - ./user_details:/data:rw

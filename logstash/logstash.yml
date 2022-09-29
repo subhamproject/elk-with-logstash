@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+    logstash:
+        image: my-logstash:latest
+        container_name: logstash
+        build:
+         context: ./logstash/
+         dockerfile: Dockerfile
+        restart: always
+        hostname: logstash
+        ports:
+          - "5044:5044"
+        depends_on:
+          - elastic1
+          - elastic2
+          - elastic3
+        environment:
+          ELASTIC_SERVERS: elastic1:9200,elastic2:9200,elastic3:9200
+        volumes:
+          - ./logstash.yml:/etc/logstash/logstash.yml
+          - ./pipelines.yml:/etc/logstash/pipelines.yml
+          - .logs.conf:/etc/logstash/conf.d/logs.conf

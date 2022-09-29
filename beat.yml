@@ -1,0 +1,20 @@
+filebeat.inputs:
+- type: container
+  paths: 
+    - '/var/lib/docker/containers/*/*.log'
+processors:
+- add_docker_metadata:
+    host: "unix:///var/run/docker.sock"
+- decode_json_fields:
+    fields: ["message"]
+    target: "json"
+    overwrite_keys: true
+setup.ilm.enabled: false
+output.logstash:
+  hosts: ["logstash:5000"]
+  ssl.certificate_authorities: /certs/elk-ca.crt
+  ssl.certificate: "/certs/filebeat.crt"
+  ssl.key: "/certs/filebeat.key"
+
+logging.json: true
+logging.metrics.enabled: false

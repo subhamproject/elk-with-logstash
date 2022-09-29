@@ -1,0 +1,15 @@
+path.data: /var/lib/logstash
+path.logs: /var/log/logstash
+pipeline.batch.size: 500
+config.reload.automatic: true
+config.reload.interval: 30s
+node.name: logstash
+path.config: /etc/logstash/conf.d/*.conf
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.username: "logstash_system"
+xpack.monitoring.elasticsearch.password: "${LS_PASSWORD}"
+xpack.monitoring.elasticsearch.hosts:  ["https://elastic1:9200", "https://elastic2:9200", "https://elastic3:9200"]
+xpack.monitoring.elasticsearch.ssl.certificate_authority: /certs/elk-ca.crt
+xpack.monitoring.elasticsearch.ssl.verification_mode: certificate
+xpack.monitoring.collection.interval: 10s
+xpack.monitoring.collection.pipeline.details.enabled: true

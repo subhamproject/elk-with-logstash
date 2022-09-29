@@ -1,0 +1,2 @@
+- pipeline.id: sys-logs
+  path.config: "/etc/logstash/conf.d/logs.conf"
