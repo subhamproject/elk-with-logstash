@@ -24,6 +24,6 @@ fi
 
 echo "*** PLEASE WAIT THIS WILL TAKE SOMETIME TO START ALL CONTAINERS ***"
 docker-compose -f elastic_cluster.yaml -f logstash_conf.yml up -d
-#sleep 60
-#docker-compose -f elastic_cluster.yaml exec elastic1 bash -c "yes | ./usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto > /data/user_details.txt"
+sleep 60
+docker-compose -f elastic_cluster.yaml exec elastic1 bash -c "yes | ./usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto > /data/user_details.txt"
 docker-compose -f kibana_server.yaml -f elastic_cluster.yaml up -d kibana
